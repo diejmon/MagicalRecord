@@ -195,14 +195,14 @@
     return [self MR_isEntityDeleted];
 }
 
-- (BOOL) deleteEntity;
+- (void) deleteEntity;
 {
-    return [self MR_deleteEntity];
+  [self MR_deleteEntity];
 }
 
-- (BOOL) deleteEntityInContext:(NSManagedObjectContext *)context;
+- (void) deleteEntityInContext:(NSManagedObjectContext *)context;
 {
-    return [self MR_deleteEntityInContext:context];
+    [self MR_deleteEntityInContext:context];
 }
 
 + (BOOL) deleteAllMatchingPredicate:(NSPredicate *)predicate;

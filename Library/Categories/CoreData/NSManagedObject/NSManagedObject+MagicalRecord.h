@@ -105,7 +105,7 @@
 
  @since Available in v1.8 and later.
  */
-- (BOOL) MR_deleteEntity;
+- (void) MR_deleteEntity;
 
 /**
  Deletes the entity from the supplied context.
@@ -116,7 +116,7 @@
 
  @since Available in v2.3 and later.
  */
-- (BOOL) MR_deleteEntityInContext:(NSManagedObjectContext *)context;
+- (void) MR_deleteEntityInContext:(NSManagedObjectContext *)context;
 
 /**
  Deletes any entities matching the passed predicate from the default context of the default stack.
@@ -271,6 +271,6 @@
 
 + (instancetype) MR_createInContext:(NSManagedObjectContext *)context MR_DEPRECATED_IN_3_0_PLEASE_USE("MR_createEntityInContext:");
 - (instancetype) MR_inContextIfTempObject:(NSManagedObjectContext *)otherContext MR_DEPRECATED_IN_3_0_PLEASE_USE("MR_inContextIfTemporaryObject:");
-- (BOOL) MR_deleteInContext:(NSManagedObjectContext *)context MR_DEPRECATED_IN_3_0_PLEASE_USE("MR_deleteEntityInContext:");
+- (void) MR_deleteInContext:(NSManagedObjectContext *)context MR_DEPRECATED_IN_3_0_PLEASE_USE("MR_deleteEntityInContext:");
 
 @end

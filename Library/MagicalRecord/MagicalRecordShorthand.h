@@ -79,8 +79,8 @@
 + (instancetype) createEntityInContext:(NSManagedObjectContext *)context;
 + (instancetype) createEntityWithDescription:(NSEntityDescription *)entityDescription inContext:(NSManagedObjectContext *)context;
 - (BOOL) isEntityDeleted;
-- (BOOL) deleteEntity;
-- (BOOL) deleteEntityInContext:(NSManagedObjectContext *)context;
+- (void) deleteEntity;
+- (void) deleteEntityInContext:(NSManagedObjectContext *)context;
 + (BOOL) deleteAllMatchingPredicate:(NSPredicate *)predicate;
 + (BOOL) deleteAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
 + (BOOL) truncateAll;

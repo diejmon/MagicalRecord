@@ -40,14 +40,7 @@ typedef void (^MRSaveCompletionHandler)(BOOL success, NSError *error);
  */
 - (void) MR_saveOnlySelfWithCompletion:(MRSaveCompletionHandler)completion;
 
-/**
- Asynchronously save changes in the current context all the way back to the persistent store.
- Executes asynchronous saves on the current context, and any ancestors, until the changes have been persisted to the assigned persistent store.
-
- @param completion Completion block that is called after the save has completed. The block is passed a success state as a `BOOL` and an `NSError` instance if an error occurs.
- 
- @since Available in 2.1 and later.
- */
+- (void) MR_saveToPersistentStoreAndWaitWithCompletion:(MRSaveCompletionHandler)completion;
 - (void) MR_saveToPersistentStoreWithCompletion:(MRSaveCompletionHandler)completion;
 
 /**

@@ -22,7 +22,7 @@
 
     if ([entityName length] == 0)
     {
-        entityName = NSStringFromClass(self);
+        entityName = [NSStringFromClass(self) componentsSeparatedByString:@"."].lastObject;
     }
 
     return entityName;
@@ -180,29 +180,26 @@
     return obj == nil;
 }
 
-- (BOOL) MR_deleteEntity
+- (void) MR_deleteEntity
 {
-	return [self MR_deleteEntityInContext:[self managedObjectContext]];
+	[self MR_deleteEntityInContext:[self managedObjectContext]];
 }
 
-- (BOOL) MR_deleteEntityInContext:(NSManagedObjectContext *)context
+- (void) MR_deleteEntityInContext:(NSManagedObjectContext *)context
 {
-  __block BOOL deleted = NO;
+  NSManagedObjectID *const objectID = self.objectID;
+  
   [context performBlockAndWait:^{
     NSError *retrieveExistingObjectError;
     
-    NSManagedObject *objectInContext = [context existingObjectWithID:[self objectID] error:&retrieveExistingObjectError];
+    NSManagedObject *objectInContext = [context existingObjectWithID:objectID error:&retrieveExistingObjectError];
     
     [[retrieveExistingObjectError MR_coreDataDescription] MR_logToConsole];
     
     if (objectInContext) {
       [context deleteObject:objectInContext];
     }
-    
-    deleted = [objectInContext MR_isEntityDeleted];
   }];
-  
-  return deleted;
 }
 
 + (BOOL) MR_deleteAllMatchingPredicate:(NSPredicate *)predicate
@@ -372,9 +369,9 @@
     return [self MR_createEntityInContext:context];
 }
 
-- (BOOL) MR_deleteInContext:(NSManagedObjectContext *)context
+- (void) MR_deleteInContext:(NSManagedObjectContext *)context
 {
-    return [self MR_deleteEntityInContext:context];
+    [self MR_deleteEntityInContext:context];
 }
 
 - (instancetype) MR_inContextIfTempObject:(NSManagedObjectContext *)otherContext;
