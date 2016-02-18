@@ -70,7 +70,4 @@
 #import "NSFetchedResultsController+MagicalFetching.h"
 #endif
 
-#define MR_SHORTHAND 1
-#import "MagicalRecordShorthand.h"
-
 #endif // ifdef __OBJC__
