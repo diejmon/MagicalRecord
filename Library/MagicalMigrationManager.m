@@ -248,31 +248,31 @@
 
 - (BOOL) MagicalMigrationManager_backupSourceStoreAtURL:(NSURL *)sourceStoreURL movingDestinationStoreAtURL:(NSURL *)destinationStoreURL error:(NSError **)error;
 {
-    NSString *guid = [[NSProcessInfo processInfo] globallyUniqueString];
-    NSString *backupPath = [NSTemporaryDirectory() stringByAppendingPathComponent:guid];
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+  NSString *guid = [[NSProcessInfo processInfo] globallyUniqueString];
+  NSString *backupPath = [NSTemporaryDirectory() stringByAppendingPathComponent:guid];
+  
+  NSFileManager *fileManager = [NSFileManager defaultManager];
   NSString *sourceStoreURLPath = sourceStoreURL.path;
   if (sourceStoreURLPath && ![fileManager moveItemAtPath:sourceStoreURLPath
                                                   toPath:backupPath
                                                    error:error])
   {
-        // Failed to copy the file
-        return NO;
-    }
-    // Move the destination to the source path
-    NSString *destinationStoreURLPath = destinationStoreURL.path;
-    if (destinationStoreURLPath && ![fileManager moveItemAtPath:destinationStoreURLPath
-                                                         toPath:sourceStoreURLPath
-                                                          error:error])
-    {
-        // Try to back out the source move first, no point in checking it for errors
-        [fileManager moveItemAtPath:backupPath
-                             toPath:sourceStoreURLPath
-                              error:nil];
-        return NO;
-    }
-    return YES;
+    // Failed to copy the file
+    return NO;
+  }
+  // Move the destination to the source path
+  NSString *destinationStoreURLPath = destinationStoreURL.path;
+  if (destinationStoreURLPath && sourceStoreURLPath && ![fileManager moveItemAtPath:destinationStoreURLPath
+                                                                             toPath:sourceStoreURLPath
+                                                                              error:error])
+  {
+    // Try to back out the source move first, no point in checking it for errors
+    [fileManager moveItemAtPath:backupPath
+                         toPath:sourceStoreURLPath
+                          error:nil];
+    return NO;
+  }
+  return YES;
 }
 
 @end
