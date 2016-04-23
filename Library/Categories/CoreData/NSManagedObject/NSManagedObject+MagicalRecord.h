@@ -101,8 +101,6 @@
  
  The default stack must be setup and available for use before using this method.
 
- @return YES if the delete was performed successfully, otherwise NO.
-
  @since Available in v1.8 and later.
  */
 - (void) MR_deleteEntity;
@@ -111,8 +109,6 @@
  Deletes the entity from the supplied context.
 
  @param context Managed object context
-
- @return YES if the delete was performed successfully, otherwise NO.
 
  @since Available in v2.3 and later.
  */
