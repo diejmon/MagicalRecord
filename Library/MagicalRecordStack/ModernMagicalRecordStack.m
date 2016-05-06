@@ -22,7 +22,7 @@
 #ifdef DEBUG
 - (void)dealloc
 {
-  MRLogVerbose(@"DSManagedObjectContext dealloc with name: %@", ds_name);
+  NSLog(@"DSManagedObjectContext dealloc with name: %@", ds_name);
 }
 #endif
 
