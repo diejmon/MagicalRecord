@@ -22,13 +22,17 @@
 #ifdef DEBUG
 - (void)dealloc
 {
-  NSLog(@"DSManagedObjectContext dealloc with name: %@", ds_name);
+  [self performBlockAndWait:^{
+    NSLog(@"DSManagedObjectContext dealloc with name: %@", self->ds_name);
+  }];
 }
 #endif
 
 - (void)setName:(NSString *)name
 {
-  ds_name = name.copy;
+  [self performBlockAndWait:^{
+    self->ds_name = name.copy;
+  }];
   [super setName:name];
 }
 @end
