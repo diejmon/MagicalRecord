@@ -66,14 +66,14 @@ dispatch_queue_t MR_saveQueue()
         {
             MRLogVerbose(@"%@ save starting", contextWorkingName);
             
-            NSManagedObjectContext *localContext = [self newConfinementContext];
+          NSManagedObjectContext *localContext = [self newConfinementContext];
           [localContext performBlockAndWait:^{
-            [localContext MR_setWorkingName:contextWorkingName];            
-          }];
-          
+            [localContext MR_setWorkingName:contextWorkingName];
+            
             block(localContext);
 
             [localContext MR_saveWithOptions:MRSaveParentContexts|MRSaveSynchronously completion:completion];
+          }];
         }
     });
 }
@@ -87,30 +87,30 @@ dispatch_queue_t MR_saveQueue()
 
 - (BOOL) saveWithBlockAndWait:(void(^)(NSManagedObjectContext *localContext))block error:(NSError **)error;
 {
-    NSParameterAssert(block);
-    NSManagedObjectContext *localContext = [self newConfinementContext];
-
+  NSParameterAssert(block);
+  NSManagedObjectContext *localContext = [self newConfinementContext];
+  __block BOOL saveSuccess = YES;
+  
+  [localContext performBlockAndWait:^{
     block(localContext);
-
+    
     if (NO == [localContext hasChanges])
     {
-        MRLogInfo(@"NO CHANGES IN ** %@ ** CONTEXT - NOT SAVING", [localContext MR_workingName]);
-
-        return YES;
+      MRLogInfo(@"NO CHANGES IN ** %@ ** CONTEXT - NOT SAVING", [localContext MR_workingName]);
     }
-
-    __block BOOL saveSuccess = YES;
-
-    [localContext MR_saveWithOptions:MRSaveParentContexts|MRSaveSynchronously completion:^(BOOL localSuccess, NSError *localSaveError) {
+    else {
+      [localContext MR_saveWithOptions:MRSaveParentContexts|MRSaveSynchronously completion:^(BOOL localSuccess, NSError *localSaveError) {
         saveSuccess = localSuccess;
-
+        
         if (error != nil)
         {
-            *error = localSaveError;
+          *error = localSaveError;
         }
-    }];
-
-    return saveSuccess;
+      }];
+    }
+  }];
+    
+  return saveSuccess;
 }
 
 @end
